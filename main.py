@@ -1,24 +1,21 @@
-
-# project 1 DFA
+# project 1 DFA word validation
 
 with open("input.txt", "r") as f:
     lines = f.read().split("\n")
 
 of = open("output.txt", 'w')
 
-def check(word):
-    index = 0
-    # if word[0] != q0:
-    #     print("NU", end="\n")
-    #     return
-        # print("mno")
 
+def check(word):
+
+    index = 0
     currentState = q0
+
     Course = list()
     Course.append(currentState)
 
     while index < len(word):
-        if(currentState, word[index]) not in transitions:
+        if (currentState, word[index]) not in transitions:
             of.write("NU\n")
             return
         else:
@@ -29,14 +26,12 @@ def check(word):
     if currentState in F:
         of.write("DA\n")
         of.write("Traseu: ")
-        # of.writelines(Course)
         for state in Course:
-            of.write(state+" ")
+            of.write(state + " ")
         of.write("\n")
 
     else:
         of.write("NU\n")
-
 
 
 # NoQ - no states
@@ -45,24 +40,25 @@ def check(word):
 # NoF - no final states
 # F - final states
 # q0 - initial state
-# NoTransitions
+# NoTransitions - no of transitions
 # transitions
-# Nowords
+# Nowords - no of words
 
 Q = set()
 sigma = set()
 F = set()
 transitions = dict()
 
-now = 0 #current line in input file
+now = 0  # current line in input file
 
-# line 0 -
+# line 0 - No of states and transitions
+
 lines[0] = lines[0].split()
 NoQ = int(lines[0][0])
-
 NoTransitions = int(lines[0][1])
 
-now+=1
+# moving to the next line in the file
+now += 1
 
 # all states
 for i in range(NoQ):
@@ -70,12 +66,13 @@ for i in range(NoQ):
 
 # lines 1-NoTransitions (All transitions)
 
-for i in range(1, NoTransitions+1):
+for i in range(1, NoTransitions + 1):
     transition = lines[i].split()
     key = (transition[0], transition[2])
     transitions[key] = transition[1]
-    # in dictionar vom avea tranzitiile de forma transition(state1, letter) = state2
     now += 1
+    # in the dictionary we will have the transitions like this: transition(state1, letter) = state2
+
 
 q0 = lines[now]
 
@@ -85,7 +82,7 @@ finalstates = lines[now].split()
 NoF = int(finalstates[0])
 
 for i in range(NoF):
-    F.add(finalstates[i+1])
+    F.add(finalstates[i + 1])
 
 now += 1
 
@@ -96,7 +93,4 @@ now += 1
 for i in range(Nowords):
     word = lines[now]
     now += 1
-    # print(word[0],q0)
     check(word)
-
-
